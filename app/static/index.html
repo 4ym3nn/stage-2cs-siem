@@ -85,6 +85,19 @@
     <button onclick="createCase()">Create case</button>
   </dialog>
 
+  <dialog id="credentials-dialog" class="credentials-dialog">
+    <form method="dialog" class="dialog-head">
+      <div><small>SESSION ACCESS</small><h2>Analyst credentials</h2><p>Used for protected analyst actions in this browser session.</p></div>
+      <button class="icon-button" aria-label="Close">×</button>
+    </form>
+    <label>Analyst name<input id="credentials-analyst" autocomplete="username" placeholder="e.g. aymen" /></label>
+    <label>API key
+      <div class="secret-field"><input id="credentials-key" type="password" autocomplete="current-password" placeholder="Not required in local mode" /><button type="button" class="reveal-button" onclick="toggleApiKey()" aria-label="Show or hide API key">Show</button></div>
+    </label>
+    <p class="credential-help">The key stays in session storage and is removed when the browser session ends.</p>
+    <div class="dialog-actions"><button type="button" class="danger-button" onclick="clearCredentials()">Clear</button><button type="button" class="secondary" onclick="$('#credentials-dialog').close()">Cancel</button><button type="button" onclick="saveCredentials()">Save credentials</button></div>
+  </dialog>
+
   <div id="toast" role="status"></div>
   <script src="/static/app.js"></script>
 </body>

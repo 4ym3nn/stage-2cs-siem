@@ -88,6 +88,16 @@ dialog pre { max-height: 220px; overflow: auto; padding: 12px; background: #0710
 .note small { float: right; color: var(--muted); }
 .note p { margin: 5px 0 0; }
 .note-form { display: grid; grid-template-columns: 130px 1fr auto; gap: 8px; margin-top: 12px; }
+.credentials-dialog { width: min(520px, calc(100vw - 32px)); }
+.credentials-dialog .dialog-head p { margin: 5px 0 0; color: var(--muted); }
+.secret-field { display: grid; grid-template-columns: 1fr auto; }
+.secret-field input { min-width: 0; border-radius: 8px 0 0 8px; }
+.reveal-button { padding: 0 14px; color: var(--accent); background: var(--panel2); border: 1px solid var(--line); border-left: 0; border-radius: 0 8px 8px 0; cursor: pointer; }
+.credential-help { margin: -3px 0 20px; color: var(--muted); font-size: 12px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 9px; border-top: 1px solid var(--line); padding-top: 16px; }
+.dialog-actions button { border-radius: 8px; padding: 9px 13px; font-weight: 700; cursor: pointer; }
+.dialog-actions button:last-child { color: #062019; background: var(--accent); border: 0; }
+.danger-button { margin-right: auto; color: #ff9aaa; background: transparent; border: 1px solid #743344; }
 #toast { position: fixed; right: 22px; bottom: 22px; padding: 11px 16px; color: #062019; background: var(--accent); border-radius: 8px; transform: translateY(80px); opacity: 0; transition: .2s; pointer-events: none; }
 #toast.show { transform: translateY(0); opacity: 1; }
 #toast.error { color: white; background: var(--danger); }

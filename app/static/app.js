@@ -29,13 +29,35 @@ function toast(message, isError = false) {
 }
 
 function setApiKey() {
-  const analyst = prompt('Analyst name', sessionStorage.getItem('siemAnalyst') || 'analyst');
-  if (analyst !== null && analyst.trim()) sessionStorage.setItem('siemAnalyst', analyst.trim());
-  const key = prompt('API key (leave empty for local mode)', sessionStorage.getItem('siemApiKey') || '');
-  if (key !== null) {
-    key ? sessionStorage.setItem('siemApiKey', key) : sessionStorage.removeItem('siemApiKey');
-    toast('Browser credentials updated');
-  }
+  $('#credentials-analyst').value = sessionStorage.getItem('siemAnalyst') || 'analyst';
+  $('#credentials-key').value = sessionStorage.getItem('siemApiKey') || '';
+  $('#credentials-key').type = 'password';
+  $('.reveal-button').textContent = 'Show';
+  $('#credentials-dialog').showModal();
+  setTimeout(() => $('#credentials-analyst').focus(), 0);
+}
+
+function toggleApiKey() {
+  const input = $('#credentials-key');
+  const showing = input.type === 'text';
+  input.type = showing ? 'password' : 'text';
+  $('.reveal-button').textContent = showing ? 'Show' : 'Hide';
+}
+
+function saveCredentials() {
+  const analyst = $('#credentials-analyst').value.trim();
+  const key = $('#credentials-key').value.trim();
+  analyst ? sessionStorage.setItem('siemAnalyst', analyst) : sessionStorage.removeItem('siemAnalyst');
+  key ? sessionStorage.setItem('siemApiKey', key) : sessionStorage.removeItem('siemApiKey');
+  $('#credentials-dialog').close();
+  toast('Session credentials saved');
+}
+
+function clearCredentials() {
+  sessionStorage.removeItem('siemAnalyst');
+  sessionStorage.removeItem('siemApiKey');
+  $('#credentials-dialog').close();
+  toast('Session credentials cleared');
 }
 
 async function loadStats() {
