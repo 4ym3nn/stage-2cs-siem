@@ -1,0 +1,122 @@
+LINUX-SSH-BRUTE:
+  title: SSH brute-force activity
+  severity: high
+  mitre_technique: T1110
+  mitre_tactic: Credential Access
+  description: Repeated failed SSH authentication attempts from the same source.
+  enabled: true
+  threshold: 5
+  window_seconds: 120
+  cooldown_seconds: 300
+
+AUTH-FAIL-BURST:
+  title: Authentication failure burst
+  severity: medium
+  mitre_technique: T1110
+  mitre_tactic: Credential Access
+  description: Repeated authentication failures for the same user or source.
+  enabled: true
+  threshold: 6
+  window_seconds: 180
+  cooldown_seconds: 300
+
+NET-PORT-SCAN:
+  title: Possible port scan
+  severity: medium
+  mitre_technique: T1046
+  mitre_tactic: Discovery
+  description: One source contacted many destination ports in a short interval.
+  enabled: true
+  threshold: 12
+  window_seconds: 60
+  cooldown_seconds: 300
+
+PRIV-SUDO-ROOT:
+  title: Privileged command execution
+  severity: medium
+  mitre_technique: T1548.003
+  mitre_tactic: Privilege Escalation
+  description: A command was executed through sudo or as root.
+  enabled: true
+  cooldown_seconds: 120
+
+WIN-PRIV-GROUP:
+  title: User added to privileged group
+  severity: high
+  mitre_technique: T1098
+  mitre_tactic: Persistence
+  description: A Windows account appears to have been added to a privileged group.
+  enabled: true
+  cooldown_seconds: 300
+
+PROC-REVERSE-SHELL:
+  title: Possible reverse shell
+  severity: critical
+  mitre_technique: T1059
+  mitre_tactic: Execution
+  description: Process or command content matches common reverse-shell behavior.
+  enabled: true
+  cooldown_seconds: 300
+
+WEB-ENUM:
+  title: Web enumeration activity
+  severity: medium
+  mitre_technique: T1595.002
+  mitre_tactic: Reconnaissance
+  description: Request patterns indicate automated content or directory discovery.
+  enabled: true
+  cooldown_seconds: 300
+
+SURICATA-HIGH:
+  title: High-severity IDS alert
+  severity: high
+  mitre_technique: null
+  mitre_tactic: Initial Access
+  description: Suricata emitted a high-severity signature alert.
+  enabled: true
+  cooldown_seconds: 120
+
+WIN-ACCOUNT-CREATED:
+  title: Windows local account created
+  severity: medium
+  mitre_technique: T1136.001
+  mitre_tactic: Persistence
+  description: A new Windows local account was created.
+  enabled: true
+  cooldown_seconds: 300
+
+WIN-POWERSHELL-ENCODED:
+  title: Encoded PowerShell execution
+  severity: high
+  mitre_technique: T1059.001
+  mitre_tactic: Execution
+  description: PowerShell was launched with an encoded command argument.
+  enabled: true
+  cooldown_seconds: 300
+
+WIN-LOG-CLEARED:
+  title: Windows audit log cleared
+  severity: high
+  mitre_technique: T1070.001
+  mitre_tactic: Defense Evasion
+  description: The Windows Security audit log was cleared.
+  enabled: true
+  cooldown_seconds: 600
+
+LINUX-PERSIST-CRON:
+  title: Suspicious scheduled task modification
+  severity: medium
+  mitre_technique: T1053.003
+  mitre_tactic: Persistence
+  description: A Linux process modified cron scheduling configuration.
+  enabled: true
+  cooldown_seconds: 300
+
+LINUX-LOG-CLEARED:
+  title: Linux logs cleared or removed
+  severity: high
+  mitre_technique: T1070.002
+  mitre_tactic: Defense Evasion
+  description: A command attempted to truncate or remove system logs.
+  enabled: true
+  cooldown_seconds: 600

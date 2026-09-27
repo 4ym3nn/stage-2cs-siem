@@ -1,0 +1,1 @@
+{"timestamp":"2026-09-27T16:00:00.000000+0000","event_type":"alert","src_ip":"198.51.100.44","src_port":55001,"dest_ip":"10.0.0.15","dest_port":443,"proto":"TCP","alert":{"severity":1,"signature":"ET EXPLOIT Possible Web Application Attack","signature_id":900001}}

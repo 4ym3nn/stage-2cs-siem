@@ -1,0 +1,1 @@
+{"host":"srv-01","event_type":"ssh_failed","src_ip":"203.0.113.77","user":"root","message":"Failed password for root from 203.0.113.77 port 51234 ssh2"}

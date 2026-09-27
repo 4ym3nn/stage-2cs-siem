@@ -1,0 +1,21 @@
+name: stage-2cs-siem
+
+services:
+  stage2cs-siem:
+    build: .
+    container_name: stage2cs-siem
+    ports:
+      - "8000:8000"
+    environment:
+      SIEM_DB_URL: sqlite:////data/stage2cs_siem.db
+      SIEM_API_KEY: ${SIEM_API_KEY:-}
+      SIEM_INGEST_API_KEY: ${SIEM_INGEST_API_KEY:-}
+      SIEM_ANALYST_API_KEY: ${SIEM_ANALYST_API_KEY:-}
+      SIEM_ADMIN_API_KEY: ${SIEM_ADMIN_API_KEY:-}
+      SIEM_PROTECT_READS: ${SIEM_PROTECT_READS:-false}
+      SIEM_RETENTION_DAYS: ${SIEM_RETENTION_DAYS:-30}
+    volumes:
+      - stage2cs-data:/data
+    restart: unless-stopped
+volumes:
+  stage2cs-data:

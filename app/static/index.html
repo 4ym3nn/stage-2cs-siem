@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stage 2CS SIEM</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="mark">S</span><div><strong>Stage 2CS SIEM</strong><small>Security Operations</small></div></div>
+      <nav>
+        <button class="nav active" data-tab="overview">Overview</button>
+        <button class="nav" data-tab="alerts">Alerts</button>
+        <button class="nav" data-tab="cases">Cases</button>
+        <button class="nav" data-tab="events">Events</button>
+        <button class="nav" data-tab="rules">Detection Rules</button>
+      </nav>
+      <div class="sidefoot"><span class="dot"></span> Sensor API online</div>
+    </aside>
+    <main>
+      <header>
+        <div><h1 id="page-title">Security Overview</h1><p>Detection and investigation across Linux, Windows, and Suricata telemetry.</p></div>
+        <div class="header-actions"><button class="secondary" onclick="setApiKey()">API key</button><a class="docs" href="/docs" target="_blank">API Docs</a></div>
+      </header>
+
+      <section id="overview" class="tab active">
+        <div class="cards">
+          <article><span>Total events</span><strong id="total-events">0</strong><small>Stored telemetry</small></article>
+          <article><span>Events / 24h</span><strong id="events-24h">0</strong><small>Recent activity</small></article>
+          <article><span>Open alerts</span><strong id="open-alerts">0</strong><small>Needs triage</small></article>
+          <article><span>Open cases</span><strong id="open-cases">0</strong><small>Active investigations</small></article>
+          <article><span>Critical open</span><strong id="critical-open">0</strong><small>Immediate attention</small></article>
+        </div>
+        <div class="grid2">
+          <section class="panel"><div class="panelhead"><h2>Recent alerts</h2><span>Auto-refresh</span></div><div id="recent-alerts"></div></section>
+          <section class="panel"><div class="panelhead"><h2>Telemetry sources</h2></div><div id="sources" class="bars"></div></section>
+        </div>
+      </section>
+
+      <section id="alerts" class="tab">
+        <div class="toolbar">
+          <select id="alert-severity"><option value="">All severities</option><option>critical</option><option>high</option><option>medium</option><option>low</option></select>
+          <select id="alert-status"><option value="">All states</option><option>open</option><option>investigating</option><option>closed</option><option>false_positive</option></select>
+          <button onclick="loadAlerts()">Refresh</button>
+          <a class="export" href="/api/export/alerts.csv">Export CSV</a>
+        </div>
+        <div class="panel tablewrap"><table><thead><tr><th>Last seen</th><th>Severity</th><th>Detection</th><th>MITRE</th><th>Count</th><th>Assignee</th><th>Status</th></tr></thead><tbody id="alerts-body"></tbody></table></div>
+      </section>
+
+      <section id="cases" class="tab">
+        <div class="toolbar"><button onclick="openNewCase()">New case</button><button class="secondary" onclick="loadCases()">Refresh</button></div>
+        <div class="panel tablewrap"><table><thead><tr><th>Updated</th><th>Severity</th><th>Investigation</th><th>Alerts</th><th>Assignee</th><th>Status</th></tr></thead><tbody id="cases-body"></tbody></table></div>
+      </section>
+
+      <section id="events" class="tab">
+        <div class="toolbar"><select id="event-source"><option value="">All sources</option><option>linux</option><option>windows</option><option>suricata</option><option>api</option></select><input id="event-q" placeholder="Search messages"/><button onclick="loadEvents()">Search</button></div>
+        <div class="panel tablewrap"><table><thead><tr><th>Time</th><th>Source</th><th>Host</th><th>Type</th><th>Source IP</th><th>Message</th></tr></thead><tbody id="events-body"></tbody></table></div>
+      </section>
+
+      <section id="rules" class="tab"><div id="rules-grid" class="rulesgrid"></div></section>
+    </main>
+  </div>
+
+  <dialog id="alert-dialog">
+    <form method="dialog" class="dialog-head"><div><small id="alert-rule"></small><h2 id="alert-title">Alert</h2></div><button class="icon-button">×</button></form>
+    <div class="detail-grid">
+      <label>Status<select id="detail-status"><option>open</option><option>investigating</option><option>closed</option><option>false_positive</option></select></label>
+      <label>Assignee<input id="detail-assignee" placeholder="Analyst name" /></label>
+    </div>
+    <label>Resolution / classification<textarea id="detail-resolution" rows="2"></textarea></label>
+    <div class="toolbar"><button onclick="saveAlert()">Save alert</button><button class="secondary" onclick="caseFromAlert()">Create case</button></div>
+    <h3>Evidence</h3><pre id="alert-evidence"></pre>
+    <h3>Related event</h3><pre id="alert-event"></pre>
+    <h3>Analyst notes</h3><div id="alert-notes"></div>
+    <div class="note-form"><input id="note-author" placeholder="Author" value="analyst"/><input id="note-body" placeholder="Add an investigation note"/><button onclick="addNote()">Add note</button></div>
+  </dialog>
+
+  <dialog id="case-dialog">
+    <form method="dialog" class="dialog-head"><div><small>INVESTIGATION</small><h2 id="case-dialog-title">New case</h2></div><button class="icon-button">×</button></form>
+    <label>Title<input id="case-title" maxlength="255" /></label>
+    <div class="detail-grid"><label>Severity<select id="case-severity"><option>critical</option><option>high</option><option selected>medium</option><option>low</option><option>info</option></select></label><label>Assignee<input id="case-assignee" /></label></div>
+    <label>Description<textarea id="case-description" rows="4"></textarea></label>
+    <button onclick="createCase()">Create case</button>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
